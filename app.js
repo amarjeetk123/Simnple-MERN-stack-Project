@@ -5,5 +5,5 @@ const app = express();
 module.exports = app ;
 
 app.get("/" , (req,res)=>{
-res.send("Amarjeet kuamr")
+res.send("Amarjeet kuamr nAME")
 })
