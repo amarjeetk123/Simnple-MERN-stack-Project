@@ -62,7 +62,7 @@ exports.editUser = async (req, res) =>{
         const user = await User.findByIdAndUpdate(req.params.id , req.body)
         res.status(200).json({
             success : true ,
-            message : "user update succesfully"
+            message : "user update succesfull"
         })
         
     } catch (error) {
