@@ -18,7 +18,7 @@ const Form = () => {
         // by using axios we send the data inside database
         // actually we write a "proxy" inside package.json otherwise instead pf "/createUser" we have to write "http://localhost:4000/createUser"
         const res = await axios.post("/createUser" , data)
-        console.log(res)
+        // console.log(res)
     }
 
 // function which will run on submit of form
