@@ -19,7 +19,64 @@ function UserList() {
     // here we can put all the code of fetchUserData function inside useEffect insted of  calling that funvtion but the problem is,  it is a bad practice to put asynch await inside useEffect 
     useEffect(()=>{
         fetchUserData();
-    })
+    } , [userData] );
+
+
+    // function for edit the details........
+    const handleEdit = async (user) =>{
+
+      const userChoice = prompt("what you want to delete name or email")
+      if(userChoice === "name"){
+        const newName = prompt("Please Enter Your New Name")
+        if(!newName){
+          alert("Please enter the name")
+        }
+        else{
+          const editName = await axios.put(`/editUser/${user._id}` , {
+            name: newName ,
+          } )
+        }
+      }
+      else if(userChoice === "email"){
+        const newEmail = prompt("Please Enter Your New Email")
+        
+        // check user is already exist or not
+        let a = false;
+        userData.forEach((user) => {
+          if(user.email === newEmail){
+            a = true;
+          }
+        });
+        if(a === true){
+          alert(`${newEmail} is already is in use please write a differen email`)
+        }
+
+
+        if(!newEmail){
+          alert("Please enter the name")
+        }
+        else{
+          const editEmail = await axios.put(`/editUser/${user._id}` , {
+            email: newEmail ,
+          } )
+        }
+      }
+      else{
+       alert("Please Write The Correct Option")
+      }
+
+    
+    }
+
+    // function for delete the details
+    const handleDelete = async (userId) => {
+      let userChoic = window.confirm("Are You Sure ?")
+      if(userChoic){
+        const delete_ =  await axios.delete(`/deleteUser/${userId}`)
+      }
+    }
+
+
   return (
     <section className="text-gray-600 body-font">
     <div className="container px-5 py-24 mx-auto">
@@ -55,7 +112,7 @@ function UserList() {
                   <td className="px-4 py-3">
                     <button
                       className="hover:text-green-500"
-                    //   onClick={() => handleEdit(user)}
+                      onClick={() => handleEdit(user)}
                     >
                       Edit
                     </button>
@@ -63,7 +120,7 @@ function UserList() {
                   <td className="px-4 py-3 text-lg text-gray-900">
                     <button
                       className="hover:text-red-500"
-                    //   onClick={() => handleDelete(user._id)}
+                      onClick={() => handleDelete(user._id)} // we can pass yser or user._id
                     >
                       Delete
                     </button>
