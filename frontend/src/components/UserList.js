@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import {BASE_URL} from "../App"
 
 function UserList() {
 
@@ -7,7 +8,7 @@ function UserList() {
 
     const fetchUserData = async () =>{
 
-        const respo = await axios.get("/getUser")
+        const respo = await axios.get(`${BASE_URL}/getUser`)
         // console.log(respo)
 
         // if no users is there plesae no set the value of setUserData

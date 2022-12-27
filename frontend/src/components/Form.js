@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import axios from "axios"
+import {BASE_URL} from "../App"
 
 const Form = () => {
+  // console.log(BASE_URL)
 
   // To store the value from frontend 
   const [userName, setUserName] = useState("")
@@ -10,6 +12,7 @@ const Form = () => {
 
   // function to send the data to backend
   const submitData = async () => {
+    console.log("submit")
     const data = {
       name: userName,
       email: userEmail,
@@ -17,8 +20,12 @@ const Form = () => {
     // for sending the data from frontend to backend or viceversa we used axios
     // by using axios we send the data inside database
     // actually we write a "proxy" inside package.json otherwise instead of "/createUser" we have to write "http://localhost:4000/createUser"
-    const res = await axios.post("/createUser", data)
-    // console.log(res)
+   try {
+    const res = await axios.post(`${BASE_URL}/createUser`, data)
+    console.log(res)
+   } catch (error) {
+    console.log(error.message)
+   }
   }
 
   // function which will run on submit of form
