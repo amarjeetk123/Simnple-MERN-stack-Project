@@ -20,12 +20,11 @@ exports.createUser = async (req , res) =>{
 
         const userExit = await User.findOne({email})
         if(userExit){
-            throw new Error("Email Already Exists")
-            // res.status(401).json({
-            //     success : false ,
-            //     message : "User Email is already exist",
+           return res.status(401).json({
+                success : false ,
+                message : "User Email is already exist",
                 
-            // })
+            })
         }
  // Inserting into database
         const user = await User.create({name , email})

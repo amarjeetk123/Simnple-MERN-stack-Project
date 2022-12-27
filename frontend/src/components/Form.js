@@ -22,9 +22,11 @@ const Form = () => {
     // actually we write a "proxy" inside package.json otherwise instead of "/createUser" we have to write "http://localhost:4000/createUser"
    try {
     const res = await axios.post(`${BASE_URL}/createUser`, data)
-    console.log(res)
+    // console.log(res)
+    alert("User Created Succesfully")
    } catch (error) {
-    console.log(error.message)
+    // console.log(error)
+    alert(error.response.data.message)
    }
   }
 
@@ -94,7 +96,7 @@ const Form = () => {
                 <div className="p-2 w-full">
                   <button
                     type="submit"
-                    className="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"
+                    className="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg mt-4"
                   >
                     Submit
                   </button>

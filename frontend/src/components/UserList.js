@@ -33,7 +33,7 @@ function UserList() {
           alert("Please enter the name")
         }
         else{
-          const editName = await axios.put(`/editUser/${user._id}` , {
+          const editName = await axios.put(`${BASE_URL}/editUser/${user._id}` , {
             name: newName ,
           } )
         }
@@ -73,7 +73,7 @@ function UserList() {
     const handleDelete = async (userId) => {
       let userChoic = window.confirm("Are You Sure ?")
       if(userChoic){
-        const delete_ =  await axios.delete(`/deleteUser/${userId}`)
+        const delete_ =  await axios.delete(`${BASE_URL}/deleteUser/${userId}`)
       }
     }
 
@@ -106,8 +106,8 @@ function UserList() {
           </thead>
           <tbody>
             {userData &&
-              userData.map((user) => (
-                <tr>
+              userData.map((user, i) => (
+                <tr key={i}>
                   <td className="px-4 py-3">{user.name}</td>
                   <td className="px-4 py-3">{user.email}</td>
                   <td className="px-4 py-3">
