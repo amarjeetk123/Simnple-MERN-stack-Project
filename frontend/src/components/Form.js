@@ -3,40 +3,40 @@ import axios from "axios"
 
 const Form = () => {
 
-    // To store the value from frontend 
-    const [userName , setUserName] = useState("")
-    const [userEmail , setUserEmail] = useState("")
-    // console.log(userName , userEmail) 
+  // To store the value from frontend 
+  const [userName, setUserName] = useState("")
+  const [userEmail, setUserEmail] = useState("")
+  // console.log(userName , userEmail) 
 
-    // function to send the data to backend
-    const submitData = async () =>{
-        const data = {
-            name : userName ,
-            email : userEmail,
-        }
-        // for sending the data from frontend to backend or viceversa we used axios
-        // by using axios we send the data inside database
-        // actually we write a "proxy" inside package.json otherwise instead pf "/createUser" we have to write "http://localhost:4000/createUser"
-        const res = await axios.post("/createUser" , data)
-        // console.log(res)
+  // function to send the data to backend
+  const submitData = async () => {
+    const data = {
+      name: userName,
+      email: userEmail,
     }
+    // for sending the data from frontend to backend or viceversa we used axios
+    // by using axios we send the data inside database
+    // actually we write a "proxy" inside package.json otherwise instead of "/createUser" we have to write "http://localhost:4000/createUser"
+    const res = await axios.post("/createUser", data)
+    // console.log(res)
+  }
 
-// function which will run on submit of form
-    const handleSubmit = (e) =>{
-        e.preventDefault()
+  // function which will run on submit of form
+  const handleSubmit = (e) => {
+    e.preventDefault()
 
-        // to submit the data 
-        submitData()
-        // but EMPTY the user details
-        setUserName("")
-        setUserEmail("")
+    // to submit the data 
+    submitData()
+    // but EMPTY the user details
+    setUserName("")
+    setUserEmail("")
 
-    }
+  }
 
 
   return (
     <div>
-        <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <section className="text-gray-600 body-font relative">
           <div className="container px-5 py-8 mx-auto">
             <div className="flex flex-col text-center w-full mb-6">
