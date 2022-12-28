@@ -69,7 +69,7 @@ function UserList() {
   const [secondField, setSecondField] = useState("")
   const [deletePermission, setDeletePermission] = useState(false);
   const [showAnimation, setShowAnimation] = useState(false);
-  
+
   const handleDelete = async () => {
     // console.log(userDetails)
     // console.log(firstField)
@@ -92,6 +92,8 @@ function UserList() {
       }, 2000);
       setDeletePermission(false)
       setUserDetails("")
+      setFirstField("")
+      setSecondField("")
     }
   };
 
@@ -121,61 +123,56 @@ function UserList() {
                 <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">
                   Name
                 </th>
-                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 text-[21px]">
                   Email
                 </th>
-                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 text-[21px]">
                   Edit
                 </th>
-                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 ">
                   Delete
                 </th>
               </tr>
             </thead>
             <tbody>
-              {userData &&
-                userData.map((user, i) => (
+              {
+                userData ?     userData.map((user, i) => (
                   <tr key={i}>
-                    <td className="px-4 py-3">{user.name}</td>
-                    <td className="px-4 py-3">{user.email}</td>
-                    <td className="px-4 py-3">
+                    <td className="px-4 py-3 text-[19px]">{user.name}</td>
+                    <td className="px-4 py-3 text-[19px]">{user.email}</td>
+                    <td className="px-4 py-3"   >
                       <button
-                        className="hover:text-green-500"
+                        className="hover:text-green-500  text-[19px] "
                         onClick={() => handleEdit(user)}
                       >
                         Edit
                       </button>
                     </td>
-                    <td className="px-4 py-3 text-lg text-gray-900">
-                      {/* <button
-                        className="hover:text-red-500"
-                        onClick={() => handleDelete(user._id)} // we can pass yser or user._id
-                      >
-                        Delete
-                      </button> */}
-                      <lord-icon
-                        src="https://cdn.lordicon.com/jmkrnisz.json"
-                        trigger="morph"
-                        colors={isHovering ? "primary:#c71f16" : "blue"}
-                        style={{
-                          cursor: "pointer",
-                          width: "40px",
-                          height: "40px",
-                          colors: "primary:#121331"
-                        }}
-                        onMouseEnter={handleMouseEnter}
-                        onMouseLeave={handleMouseLeave}
-                        onClick={() => {
-                          setDeletePermission(true)
-                          setUserDetails(user)
-                        }}
-
-                      >
-                        {" "}
-                      </lord-icon>
+                    <td className="px-4 py-3 ">
+                      <button>
+                        <lord-icon
+                          src="https://cdn.lordicon.com/jmkrnisz.json"
+                          trigger="morph"
+                          colors={isHovering ? "primary:#c71f16" : "blue"}
+                          className="hover:bg-red-200 "
+                          style={{
+                            cursor: "pointer",
+                            width: "40px",
+                            height: "40px",
+                            colors: "primary:#121331"
+                          }}
+                          onMouseEnter={handleMouseEnter}
+                          onMouseLeave={handleMouseLeave}
+                          onClick={() => {
+                            setDeletePermission(true)
+                            setUserDetails(user)
+                          }}></lord-icon>
+                      </button>
                     </td>
                   </tr>
-                ))}
+                )) : null
+             
+              }
             </tbody>
           </table>
         </div>
@@ -221,6 +218,8 @@ function UserList() {
                 onClick={() => {
                   setDeletePermission(false)
                   setUserDetails("")
+                  setFirstField("")
+                  setSecondField("")
                 }}
               >
                 Cancel
@@ -230,7 +229,7 @@ function UserList() {
 
                 style={{
 
-                  cursor: firstField == "" || secondField == "" ? "not-allowed" : "pointer"
+                  cursor: firstField === "" || secondField === "" ? "not-allowed" : "pointer"
                   // pointerEvents: "none"
                 }} >
                 Delete
