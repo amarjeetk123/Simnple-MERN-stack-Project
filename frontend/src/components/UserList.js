@@ -64,13 +64,23 @@ function UserList() {
   };
 
   // function for delete the details
-  const [ deletePermission ,setDeletePermission] = useState(false)
+  const [deletePermission, setDeletePermission] = useState(false);
   const handleDelete = async (userId) => {
-    setDeletePermission(true)
-    // let userChoic = window.confirm("Are You Sure ?");
-    // if (userChoic) {
+    setDeletePermission(true);
+
+    
+
     //   const delete_ = await axios.delete(`${BASE_URL}/deleteUser/${userId}`);
-    // }
+  };
+
+  // code for applying hover effect on lord-icon
+  
+  const [isHovering, setIsHovering] = useState(false);
+  const handleMouseEnter = () => {
+    setIsHovering(true);
+  };
+  const handleMouseLeave = () => {
+    setIsHovering(false);
   };
 
   return (
@@ -114,12 +124,28 @@ function UserList() {
                       </button>
                     </td>
                     <td className="px-4 py-3 text-lg text-gray-900">
-                      <button
+                      {/* <button
                         className="hover:text-red-500"
                         onClick={() => handleDelete(user._id)} // we can pass yser or user._id
                       >
                         Delete
-                      </button>
+                      </button> */}
+                      <lord-icon
+                        src="https://cdn.lordicon.com/jmkrnisz.json"
+                        trigger="hover"
+                        colors={isHovering ? "primary:#c71f16" : "blue"}
+                        style={{
+                          cursor: "pointer",
+                          width: "40px",
+                          height: "40px",
+                          colors:"primary:#121331"
+                        }}
+                        onMouseEnter={handleMouseEnter}
+                        onMouseLeave={handleMouseLeave}
+                        onClick={() => handleDelete(user._id)}
+                      >
+                        {" "}
+                      </lord-icon>
                     </td>
                   </tr>
                 ))}
@@ -128,52 +154,55 @@ function UserList() {
         </div>
       </div>
 
-      {deletePermission && 
-      <div className="  w-[100%] h-[100vh] custom top-0 flex justify-center items-center ">
-      <div className=" w-[600px] bg-black rounded-[10px] pt-4 border-[1px]">
+      {deletePermission && (
+        <div className="  w-[100%] h-[100vh] custom top-0 flex justify-center items-center ">
+          <div className=" w-[600px] bg-black rounded-[10px] pt-4 border-[1px]">
+            <div className="text-white flex flex-col gap-4 items-center  px-6   ">
+              <h1 className="text-[27px] -mb-2 ">Delete Project</h1>
+              <h2 className="text-[18px] text-gray-400 ">
+                This project will be deleted, along with all of its Deployments.
+              </h2>
+              <button className="bg-red-600 text-[12px] w-[100%] px-2 py-1 rounded-[4px] py-1 text-[18px] ">
+                {" "}
+                <span className="text-semibold">Warning:</span> This action is
+                not reversible. Please be certain.
+              </button>
+            </div>
 
-        <div className="text-white flex flex-col gap-4 items-center  px-6   ">
-          <h1 className="text-[27px] -mb-2 ">Delete Project</h1>
-          <h2 className="text-[18px] text-gray-400 ">
-            This project will be deleted, along with all of its Deployments.
-          </h2>
-          <button className="bg-red-600 text-[12px] w-[100%] px-2 py-1 rounded-[4px] py-1 text-[18px] ">
-            {" "}
-            <span className="text-semibold">Warning:</span> This action is not
-            reversible. Please be certain.
-          </button>
-        </div>
+            <div className="mt-10 bg-gray-800 py-6 border-[1px]   px-6">
+              <h2 className="text-white text-[18px] mb-1 ">
+                Enter the email id{" "}
+                <span className="text-gray-400">amarjeetk123/tic-tac-toe</span>{" "}
+                to continue:
+              </h2>
+              <input className="w-[100%] rounded-[4px] pl-2  text-[20px] py-1 font-semibold outline-none  bg-black text-white border-white transition duration-500 ease-in-out mt-1 " />
+              <h2 className="text-white text-[18px] mb-1 mt-4 ">
+                To verify, type{" "}
+                <span className="text-gray-400">delete this information</span>{" "}
+                below:
+              </h2>
+              <input className="w-[100%] rounded-[4px] pl-2  text-[22px] text-white py-1 mt-1 font-semibold outline-none bg-black " />
+            </div>
 
-        <div className="mt-10 bg-gray-800 py-6 border-[1px]   px-6" >
-          <h2 className="text-white text-[18px] mb-1 ">
-            Enter the email id <span className="text-gray-400" >amarjeetk123/tic-tac-toe</span> to
-            continue:
-          </h2>
-          <input className="w-[100%] rounded-[4px] pl-2  text-[20px] py-1 font-semibold outline-none  bg-black text-white border-white transition duration-500 ease-in-out mt-1 " />
-          <h2 className="text-white text-[18px] mb-1 mt-4 ">
-            To verify, type <span className="text-gray-400">delete this information</span> below:
-          </h2>
-          <input className="w-[100%] rounded-[4px] pl-2  text-[22px] text-white py-1 mt-1 font-semibold outline-none bg-black " />
+            <div className=" text-[19px] ">
+              <button
+                className="w-[50%] hover:text-white hover:bg-gray-800 py-6 border-[1px] "
+                onClick={() => setDeletePermission(false)}
+              >
+                Cancel
+              </button>
+              <button className="w-[50%] text-white hover:bg-gray-800 py-6 border-[1px]">
+                Delete
+              </button>
+            </div>
+          </div>
         </div>
-
-        <div className=" text-[19px] " >
-          <button className="w-[50%] hover:text-white hover:bg-gray-800 py-6 border-[1px] " 
-          onClick={() => setDeletePermission(false) }
-          >Cancel</button>
-          <button  className="w-[50%] text-white hover:bg-gray-800 py-6 border-[1px]">Delete</button>
-        </div>
-      </div>
-    </div> }
+      )}
     </section>
   );
 }
 {
-  /* <lord-icon  
-            src="https://cdn.lordicon.com/nhfyhmlt.json"
-            trigger="hover"
-            className=" icon1 "
-            style={{cursor: "pointer", float:"right" , margin:"5px 5px 0px 0px" , width:"50px" , height:"50px"  }}
-            > </lord-icon> */
+  /*  */
 }
 
 export default UserList;
