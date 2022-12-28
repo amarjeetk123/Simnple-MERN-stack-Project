@@ -64,17 +64,40 @@ function UserList() {
   };
 
   // function for delete the details
+  const [userDetails, setUserDetails] = useState("")   // this is set when we click on delete icon
+  const [firstField, setFirstField] = useState("")
+  const [secondField, setSecondField] = useState("")
   const [deletePermission, setDeletePermission] = useState(false);
-  const handleDelete = async (userId) => {
-    setDeletePermission(true);
+  const [showAnimation, setShowAnimation] = useState(false);
+  
+  const handleDelete = async () => {
+    // console.log(userDetails)
+    // console.log(firstField)
+    if (!firstField || !secondField) {
+      return;
+    }
+    if (userDetails.email !== firstField) {
+      return alert("Wrong Email Id");
+    }
+    if (secondField !== "delete this information") {
+      return alert("Second Field is Wrong");
+    }
 
-    
-
-    //   const delete_ = await axios.delete(`${BASE_URL}/deleteUser/${userId}`);
+    const userId = userDetails._id
+    const delete_ = await axios.delete(`${BASE_URL}/deleteUser/${userId}`);
+    if (delete_) {
+      setShowAnimation(true);
+      setTimeout(() => {
+        setShowAnimation(false)
+      }, 2000);
+      setDeletePermission(false)
+      setUserDetails("")
+    }
   };
 
+
+
   // code for applying hover effect on lord-icon
-  
   const [isHovering, setIsHovering] = useState(false);
   const handleMouseEnter = () => {
     setIsHovering(true);
@@ -132,17 +155,21 @@ function UserList() {
                       </button> */}
                       <lord-icon
                         src="https://cdn.lordicon.com/jmkrnisz.json"
-                        trigger="hover"
+                        trigger="morph"
                         colors={isHovering ? "primary:#c71f16" : "blue"}
                         style={{
                           cursor: "pointer",
                           width: "40px",
                           height: "40px",
-                          colors:"primary:#121331"
+                          colors: "primary:#121331"
                         }}
                         onMouseEnter={handleMouseEnter}
                         onMouseLeave={handleMouseLeave}
-                        onClick={() => handleDelete(user._id)}
+                        onClick={() => {
+                          setDeletePermission(true)
+                          setUserDetails(user)
+                        }}
+
                       >
                         {" "}
                       </lord-icon>
@@ -154,6 +181,8 @@ function UserList() {
         </div>
       </div>
 
+
+      {/* code for open a popup  */}
       {deletePermission && (
         <div className="  w-[100%] h-[100vh] custom top-0 flex justify-center items-center ">
           <div className=" w-[600px] bg-black rounded-[10px] pt-4 border-[1px]">
@@ -162,7 +191,7 @@ function UserList() {
               <h2 className="text-[18px] text-gray-400 ">
                 This project will be deleted, along with all of its Deployments.
               </h2>
-              <button className="bg-red-600 text-[12px] w-[100%] px-2 py-1 rounded-[4px] py-1 text-[18px] ">
+              <button className="bg-red-600 text-[12px] w-[100%] px-2 py-1 rounded-[4px] py-1 text-[20px] ">
                 {" "}
                 <span className="text-semibold">Warning:</span> This action is
                 not reversible. Please be certain.
@@ -171,33 +200,64 @@ function UserList() {
 
             <div className="mt-10 bg-gray-800 py-6 border-[1px]   px-6">
               <h2 className="text-white text-[18px] mb-1 ">
-                Enter the email id{" "}
-                <span className="text-gray-400">amarjeetk123/tic-tac-toe</span>{" "}
+                Enter the email id
+                <span className="text-gray-400 text-[22px] ">  {userDetails.email} </span>
                 to continue:
               </h2>
-              <input className="w-[100%] rounded-[4px] pl-2  text-[20px] py-1 font-semibold outline-none  bg-black text-white border-white transition duration-500 ease-in-out mt-1 " />
+              <input className="w-[100%] rounded-[4px] pl-2  text-[20px] py-1 font-semibold outline-none  bg-black text-white border-white transition duration-500 ease-in-out mt-1 "
+                onChange={(e) => setFirstField(e.target.value)} />
               <h2 className="text-white text-[18px] mb-1 mt-4 ">
                 To verify, type{" "}
-                <span className="text-gray-400">delete this information</span>{" "}
+                <span className="text-gray-400 text-[22px]">delete this information</span>{" "}
                 below:
               </h2>
-              <input className="w-[100%] rounded-[4px] pl-2  text-[22px] text-white py-1 mt-1 font-semibold outline-none bg-black " />
+              <input className="w-[100%] rounded-[4px] pl-2  text-[22px] text-white py-1 mt-1 font-semibold outline-none bg-black "
+                onChange={(e) => setSecondField(e.target.value)} />
             </div>
 
             <div className=" text-[19px] ">
               <button
                 className="w-[50%] hover:text-white hover:bg-gray-800 py-6 border-[1px] "
-                onClick={() => setDeletePermission(false)}
+                onClick={() => {
+                  setDeletePermission(false)
+                  setUserDetails("")
+                }}
               >
                 Cancel
               </button>
-              <button className="w-[50%] text-white hover:bg-gray-800 py-6 border-[1px]">
+              <button className="w-[50%] text-white hover:bg-gray-800 py-6 border-[1px]  "
+                onClick={() => handleDelete()}
+
+                style={{
+
+                  cursor: firstField == "" || secondField == "" ? "not-allowed" : "pointer"
+                  // pointerEvents: "none"
+                }} >
                 Delete
               </button>
             </div>
           </div>
         </div>
       )}
+
+
+      {/* creating a animatioon which will visible at the time of deleting details  */}
+      {showAnimation &&
+        <div className="  w-[100%] h-[100vh] absolute custom2 top-0 flex justify-center items-center ">
+          <lord-icon
+            src="https://cdn.lordicon.com/jmkrnisz.json"
+            trigger="loop"
+            colors="primary:#c71f16"
+            state="morph-erase"
+            style={{
+              cursor: "pointer",
+              width: "400px",
+              height: "400px",
+            }}
+          >
+          </lord-icon>
+        </div>}
+
     </section>
   );
 }

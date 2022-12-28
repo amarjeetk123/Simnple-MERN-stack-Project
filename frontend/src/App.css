@@ -2,8 +2,6 @@
   position: absolute;
   background-color: rgba(0,0,0,0.1);
 }
-
-lord-icon:hover{
-  color: red;
-
+.custom2{
+  background-color: rgba(0, 0, 0, 0.5);
 }
