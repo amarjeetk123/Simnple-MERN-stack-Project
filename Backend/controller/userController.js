@@ -23,7 +23,6 @@ exports.createUser = async (req , res) =>{
            return res.status(401).json({
                 success : false ,
                 message : "User Email is already exist",
-                
             })
         }
  // Inserting into database
